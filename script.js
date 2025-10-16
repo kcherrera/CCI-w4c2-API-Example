@@ -2,6 +2,7 @@ const spaceContainerISS = document.getElementById("craft-iss");
 const spaceContainerTian = document.getElementById("craft-tiangong");
 const allCrafts = document.querySelectorAll(".craft");
 
+
 function checkForAstronauts(button) {
   button.style.display = "none"; // hide button
 
@@ -42,4 +43,40 @@ function AddAstro(astro) {
   } else {
     spaceContainerTian.appendChild(div);
   }
+}
+
+function astroPic(astro) {
+  //let div = document.createElement("div");
+  let img = document.createElement("img");
+  div.classList.add("astro");
+  div.innerHTML = astro.name;
+  
+  
+  
+}
+
+function astroYearbook(button) {
+  button.style.display = "none";
+
+  fetch(
+    "https://corquaid.github.io/international-space-station-APIs/JSON/people-in-space.json"
+  )
+  .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+
+      document.getElementById(
+        "memory"
+      ).innerHTML = `${data.number} space astronauts in our yearbook!`;
+
+      var astros = data.people;
+      astros.forEach(astro => {
+        astroPic(astro);
+      });
+    })
+    .catch(error => {
+      console.error("Error loading JSON:", error);
+    });
 }
